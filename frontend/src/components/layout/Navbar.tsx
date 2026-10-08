@@ -72,15 +72,24 @@ export function Navbar() {
 
         <nav className="flex items-center gap-2">
           {isAuthenticated ? (
-            <button
-              type="button"
-              onClick={handleLogout}
-              disabled={isLoggingOut}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:text-black hover:bg-neutral-100 rounded-sm transition-colors cursor-pointer"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              <span>Sign Out</span>
-            </button>
+            <>
+              <Link
+                href="/products"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-black hover:bg-neutral-100 rounded-sm transition-colors"
+              >
+                <ShoppingBag className="w-3.5 h-3.5" />
+                <span>Products</span>
+              </Link>
+              <button
+                type="button"
+                onClick={handleLogout}
+                disabled={isLoggingOut}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:text-black hover:bg-neutral-100 rounded-sm transition-colors cursor-pointer"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign Out</span>
+              </button>
+            </>
           ) : (
             <>
               <Link

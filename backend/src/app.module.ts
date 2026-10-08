@@ -5,7 +5,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ProductsModule } from './products/products.module';
 import { User } from './users/entities/user.entity';
+import { Product } from './products/entities/product.entity';
 
 @Module({
   imports: [
@@ -26,9 +28,9 @@ import { User } from './users/entities/user.entity';
           return {
             type: 'postgres',
             url: databaseUrl,
-            entities: [User],
+            entities: [User, Product],
             autoLoadEntities: true,
-            synchronize: true, // Suitable for development / assessment setup
+            synchronize: true, // Automatically creates/updates tables
             ssl: isSsl ? { rejectUnauthorized: false } : false,
           };
         }
@@ -40,7 +42,7 @@ import { User } from './users/entities/user.entity';
           username: configService.get<string>('DB_USERNAME', 'postgres'),
           password: configService.get<string>('DB_PASSWORD', 'postgres'),
           database: configService.get<string>('DB_NAME', 'shopping_db'),
-          entities: [User],
+          entities: [User, Product],
           autoLoadEntities: true,
           synchronize: true,
           ssl: isSsl ? { rejectUnauthorized: false } : false,
@@ -49,6 +51,7 @@ import { User } from './users/entities/user.entity';
     }),
     UsersModule,
     AuthModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   User as UserIcon,
@@ -8,6 +9,8 @@ import {
   Calendar,
   Clock,
   LogOut,
+  ShoppingBag,
+  ArrowRight,
 } from 'lucide-react';
 import { authService } from '../../services/auth.service';
 import { User } from '../../types/auth.types';
@@ -89,6 +92,24 @@ export function DashboardView() {
 
   return (
     <div className="w-full max-w-lg flex flex-col gap-4">
+      {/* Quick link banner to Products Page */}
+      <div className="p-4 bg-white border border-neutral-300 rounded-sm flex items-center justify-between shadow-xs">
+        <div className="flex flex-col gap-0.5">
+          <span className="text-xs font-semibold text-black">Ready to Shop?</span>
+          <span className="text-[11px] text-neutral-600">
+            Browse our catalog of products.
+          </span>
+        </div>
+        <Link href="/products">
+          <Button variant="primary" className="text-xs flex items-center gap-1.5">
+            <ShoppingBag className="w-3.5 h-3.5" />
+            <span>View Products</span>
+            <ArrowRight className="w-3.5 h-3.5 ml-0.5" />
+          </Button>
+        </Link>
+      </div>
+
+      {/* User details card */}
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">

@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { authService } from "../../services/auth.service";
 import { cartService } from "../../services/cart.service";
+import { cn } from "../../utils/general";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -89,29 +90,41 @@ export function Navbar() {
   };
 
   return (
-    <header className="w-full border-b border-neutral-200 bg-white sticky top-0 z-40">
+    <header className="w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-xs sticky top-0 z-40 shadow-2xs">
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link
           href="/"
-          className="flex items-center gap-2 text-sm font-semibold tracking-tight text-black hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 text-sm font-semibold tracking-tight text-slate-900 hover:text-indigo-600 transition-colors"
         >
-          <ShoppingBag className="w-4 h-4 text-black" />
+          <div className="w-7 h-7 rounded-sm bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
+            <ShoppingBag className="w-4 h-4" />
+          </div>
           <span>Online Shopping Cart</span>
         </Link>
 
-        <nav className="flex items-center gap-2">
+        <nav className="flex items-center gap-1.5">
           {isAuthenticated ? (
             <>
               <Link
                 href="/products"
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-black hover:bg-neutral-100 rounded-sm transition-colors"
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-sm transition-colors",
+                  pathname === "/products"
+                    ? "bg-indigo-50 text-indigo-600 font-semibold border border-indigo-100"
+                    : "text-slate-700 hover:bg-slate-100 hover:text-slate-900",
+                )}
               >
                 <ShoppingBag className="w-3.5 h-3.5" />
                 <span>Products</span>
               </Link>
               <Link
                 href="/cart"
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-black hover:bg-neutral-100 rounded-sm transition-colors"
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-sm transition-colors",
+                  pathname === "/cart"
+                    ? "bg-indigo-50 text-indigo-600 font-semibold border border-indigo-100"
+                    : "text-slate-700 hover:bg-slate-100 hover:text-slate-900",
+                )}
               >
                 <div className="relative flex items-center justify-center">
                   <ShoppingCart className="w-3.5 h-3.5" />
@@ -125,7 +138,7 @@ export function Navbar() {
                 type="button"
                 onClick={handleLogout}
                 disabled={isLoggingOut}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:text-black hover:bg-neutral-100 rounded-sm transition-colors cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-rose-600 hover:bg-rose-50 rounded-sm transition-colors cursor-pointer"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 <span>Sign Out</span>
@@ -135,14 +148,14 @@ export function Navbar() {
             <>
               <Link
                 href="/login"
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:text-black hover:bg-neutral-100 rounded-sm transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-sm transition-colors"
               >
                 <LogIn className="w-3.5 h-3.5" />
                 <span>Login</span>
               </Link>
               <Link
                 href="/signup"
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-black text-white hover:bg-neutral-800 rounded-sm transition-colors"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium bg-indigo-600 text-white hover:bg-indigo-700 rounded-sm shadow-xs border border-indigo-600 transition-colors"
               >
                 <UserPlus className="w-3.5 h-3.5" />
                 <span>Sign Up</span>

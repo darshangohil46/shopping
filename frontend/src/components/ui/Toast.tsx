@@ -9,6 +9,7 @@ import React, {
   ReactNode,
 } from 'react';
 import { CheckCircle2, AlertCircle, Info, X } from 'lucide-react';
+import { cn } from '../../utils/general';
 
 export type ToastType = 'success' | 'error' | 'info';
 
@@ -58,27 +59,32 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toasts.map((t) => (
           <div
             key={t.id}
-            className="pointer-events-auto flex items-center justify-between gap-3 p-3 bg-white text-black border border-black rounded-sm shadow-sm transition-all"
+            className={cn(
+              "pointer-events-auto flex items-center justify-between gap-3 p-3 bg-white rounded-sm shadow-md border transition-all",
+              t.type === 'success' && "border-emerald-200 text-slate-900",
+              t.type === 'error' && "border-rose-200 text-slate-900",
+              t.type === 'info' && "border-indigo-200 text-slate-900",
+            )}
           >
-            <div className="flex items-center gap-2 text-sm font-medium">
+            <div className="flex items-center gap-2.5 text-xs font-medium">
               {t.type === 'success' && (
-                <CheckCircle2 className="w-4 h-4 text-black shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               )}
               {t.type === 'error' && (
-                <AlertCircle className="w-4 h-4 text-black shrink-0" />
+                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
               )}
               {t.type === 'info' && (
-                <Info className="w-4 h-4 text-black shrink-0" />
+                <Info className="w-4 h-4 text-indigo-600 shrink-0" />
               )}
               <span>{t.message}</span>
             </div>
             <button
               type="button"
               onClick={() => removeToast(t.id)}
-              className="text-black hover:opacity-60 cursor-pointer p-0.5 rounded-sm"
+              className="text-slate-400 hover:text-slate-700 cursor-pointer p-0.5 rounded-sm transition-colors"
               aria-label="Close toast"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5" />
             </button>
           </div>
         ))}

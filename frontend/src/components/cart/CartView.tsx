@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState, useCallback } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import React, { useEffect, useState, useCallback } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import {
   ShoppingCart,
   Trash2,
@@ -12,13 +12,13 @@ import {
   ArrowLeft,
   CheckCircle2,
   Mail,
-} from 'lucide-react';
-import { cartService } from '../../services/cart.service';
-import { CartResponse, CheckoutResponse } from '../../types/cart.types';
-import { useToast } from '../../hooks/useToast';
-import { Button } from '../ui/Button';
-import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
-import { formatDateTime } from '../../utils/general';
+} from "lucide-react";
+import { cartService } from "../../services/cart.service";
+import { CartResponse, CheckoutResponse } from "../../types/cart.types";
+import { useToast } from "../../hooks/useToast";
+import { Button } from "../ui/Button";
+import { Card, CardHeader, CardTitle, CardContent } from "../ui/Card";
+import { formatDateTime } from "../../utils/general";
 
 export function CartView() {
   const { toast } = useToast();
@@ -33,15 +33,18 @@ export function CartView() {
       const data = await cartService.getCart();
       setCart(data);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Failed to fetch cart';
-      toast(msg, 'error');
+      const msg = err instanceof Error ? err.message : "Failed to fetch cart";
+      toast(msg, "error");
     } finally {
       setIsLoading(false);
     }
   }, [toast]);
 
   useEffect(() => {
-    fetchCart();
+    const init = () => {
+      fetchCart();
+    };
+    init();
   }, [fetchCart]);
 
   const handleUpdateQuantity = async (itemId: string, newQuantity: number) => {
@@ -50,12 +53,12 @@ export function CartView() {
       const updated = await cartService.updateQuantity(itemId, newQuantity);
       setCart(updated);
       if (newQuantity <= 0) {
-        toast('Item removed from cart', 'info');
+        toast("Item removed from cart", "info");
       }
     } catch (err: unknown) {
       const msg =
-        err instanceof Error ? err.message : 'Failed to update quantity';
-      toast(msg, 'error');
+        err instanceof Error ? err.message : "Failed to update quantity";
+      toast(msg, "error");
     } finally {
       setIsUpdatingId(null);
     }
@@ -66,11 +69,10 @@ export function CartView() {
     try {
       const updated = await cartService.removeItem(itemId);
       setCart(updated);
-      toast('Item removed from cart', 'info');
+      toast("Item removed from cart", "info");
     } catch (err: unknown) {
-      const msg =
-        err instanceof Error ? err.message : 'Failed to remove item';
-      toast(msg, 'error');
+      const msg = err instanceof Error ? err.message : "Failed to remove item";
+      toast(msg, "error");
     } finally {
       setIsUpdatingId(null);
     }
@@ -78,7 +80,10 @@ export function CartView() {
 
   const handleCheckout = async () => {
     if (!cart || cart.items.length === 0) {
-      toast('Your cart is empty. Please add items before checking out.', 'error');
+      toast(
+        "Your cart is empty. Please add items before checking out.",
+        "error",
+      );
       return;
     }
 
@@ -87,10 +92,10 @@ export function CartView() {
       const result = await cartService.checkout();
       setLastOrder(result);
       setCart({ items: [], grandTotal: 0, totalItems: 0 });
-      toast(result.message, 'success');
+      toast(result.message, "success");
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Checkout failed';
-      toast(msg, 'error');
+      const msg = err instanceof Error ? err.message : "Checkout failed";
+      toast(msg, "error");
     } finally {
       setIsCheckingOut(false);
     }
@@ -98,8 +103,8 @@ export function CartView() {
 
   if (isLoading) {
     return (
-      <div className="w-full max-w-5xl mx-auto py-16 flex flex-col items-center justify-center gap-3 text-neutral-500">
-        <div className="w-6 h-6 border-2 border-black border-t-transparent animate-spin rounded-full" />
+      <div className="w-full max-w-5xl mx-auto py-16 flex flex-col items-center justify-center gap-3 text-slate-500">
+        <div className="w-6 h-6 border-2 border-indigo-600 border-t-transparent animate-spin rounded-full" />
         <p className="text-xs">Loading shopping cart...</p>
       </div>
     );
@@ -109,10 +114,12 @@ export function CartView() {
   if (lastOrder) {
     return (
       <div className="w-full max-w-4xl mx-auto py-8 px-4 flex flex-col gap-6">
-        <div className="flex items-center justify-between pb-4 border-b border-neutral-200">
+        <div className="flex items-center justify-between pb-4 border-b border-slate-200">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-black" />
-            <h1 className="text-xl font-bold tracking-tight text-black">
+            <div className="w-7 h-7 rounded-sm bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
+              <CheckCircle2 className="w-4 h-4" />
+            </div>
+            <h1 className="text-xl font-bold tracking-tight text-slate-900">
               Order Confirmed
             </h1>
           </div>
@@ -125,66 +132,68 @@ export function CartView() {
           </Button>
         </div>
 
-        <Card className="p-6 flex flex-col gap-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-neutral-200">
+        <Card className="p-6 flex flex-col gap-6 border-slate-200/90 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200">
             <div>
-              <p className="text-xs text-neutral-500 font-mono">
+              <p className="text-xs text-slate-500 font-mono">
                 Order ID: {lastOrder.order.id}
               </p>
-              <p className="text-xs text-neutral-500">
+              <p className="text-xs text-slate-500">
                 Placed on: {formatDateTime(lastOrder.order.createdAt)}
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-sm border border-black bg-neutral-50 text-black">
-                <Mail className="w-3.5 h-3.5" />
-                {lastOrder.emailSent ? 'Bill Sent to Email' : 'Order Recorded'}
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-sm border border-emerald-200 bg-emerald-50 text-emerald-700">
+                <Mail className="w-3.5 h-3.5 text-emerald-600" />
+                {lastOrder.emailSent ? "Bill Sent to Email" : "Order Recorded"}
               </span>
             </div>
           </div>
 
           <div>
-            <h2 className="text-sm font-semibold text-black mb-3">
+            <h2 className="text-sm font-semibold text-slate-900 mb-3">
               Itemized Order Summary
             </h2>
-            <div className="overflow-x-auto border border-neutral-200 rounded-sm">
+            <div className="overflow-x-auto border border-slate-200 rounded-sm">
               <table className="w-full text-left text-xs">
-                <thead className="bg-neutral-50 border-b border-neutral-200">
+                <thead className="bg-slate-50 border-b border-slate-200">
                   <tr>
-                    <th className="py-2.5 px-4 font-semibold text-black">Product</th>
-                    <th className="py-2.5 px-4 font-semibold text-black text-right">
+                    <th className="py-2.5 px-4 font-semibold text-slate-800">
+                      Product
+                    </th>
+                    <th className="py-2.5 px-4 font-semibold text-slate-800 text-right">
                       Qty
                     </th>
-                    <th className="py-2.5 px-4 font-semibold text-black text-right">
+                    <th className="py-2.5 px-4 font-semibold text-slate-800 text-right">
                       Unit Price
                     </th>
-                    <th className="py-2.5 px-4 font-semibold text-black text-right">
+                    <th className="py-2.5 px-4 font-semibold text-slate-800 text-right">
                       Line Total
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-200">
+                <tbody className="divide-y divide-slate-100">
                   {lastOrder.items.map((item) => (
-                    <tr key={item.id}>
-                      <td className="py-3 px-4 font-medium text-black">
+                    <tr key={item.id} className="hover:bg-slate-50/60 transition-colors">
+                      <td className="py-3 px-4 font-medium text-slate-900">
                         {item.name}
                       </td>
-                      <td className="py-3 px-4 text-right text-neutral-700 font-mono">
+                      <td className="py-3 px-4 text-right text-slate-700 font-mono">
                         {item.quantity}
                       </td>
-                      <td className="py-3 px-4 text-right text-neutral-700 font-mono">
+                      <td className="py-3 px-4 text-right text-slate-600 font-mono">
                         Rs. {Number(item.price).toLocaleString()}
                       </td>
-                      <td className="py-3 px-4 text-right font-bold text-black font-mono">
+                      <td className="py-3 px-4 text-right font-bold text-slate-900 font-mono">
                         Rs. {Number(item.lineTotal).toLocaleString()}
                       </td>
                     </tr>
                   ))}
-                  <tr className="bg-neutral-50 font-bold">
-                    <td colSpan={3} className="py-3 px-4 text-black text-right">
+                  <tr className="bg-slate-50/80 font-bold border-t border-slate-200">
+                    <td colSpan={3} className="py-3 px-4 text-slate-900 text-right font-semibold">
                       Grand Total
                     </td>
-                    <td className="py-3 px-4 text-right text-black font-mono text-sm">
+                    <td className="py-3 px-4 text-right text-indigo-600 font-mono text-base font-bold">
                       Rs. {Number(lastOrder.order.grandTotal).toLocaleString()}
                     </td>
                   </tr>
@@ -194,11 +203,15 @@ export function CartView() {
           </div>
 
           <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <p className="text-xs text-neutral-600">
-              A copy of this order summary has been transmitted to your account email address.
+            <p className="text-xs text-slate-500">
+              A copy of this order summary has been transmitted to your account
+              email address.
             </p>
             <Link href="/products">
-              <Button variant="primary" className="text-xs flex items-center gap-1.5">
+              <Button
+                variant="primary"
+                className="text-xs flex items-center gap-1.5"
+              >
                 <span>Continue Shopping</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Button>
@@ -215,21 +228,27 @@ export function CartView() {
   return (
     <div className="w-full max-w-5xl mx-auto py-6 px-4 flex flex-col gap-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-neutral-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
-            <ShoppingCart className="w-5 h-5 text-black" />
-            <h1 className="text-xl font-bold tracking-tight text-black">
+            <div className="w-7 h-7 rounded-sm bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
+              <ShoppingCart className="w-4 h-4" />
+            </div>
+            <h1 className="text-xl font-bold tracking-tight text-slate-900">
               Cart & Billing
             </h1>
           </div>
-          <p className="text-xs text-neutral-600">
-            Review your selected items, adjust quantities, and submit your order.
+          <p className="text-xs text-slate-500">
+            Review your selected items, adjust quantities, and submit your
+            order.
           </p>
         </div>
 
         <Link href="/products">
-          <Button variant="outline" className="text-xs flex items-center gap-1.5">
+          <Button
+            variant="outline"
+            className="text-xs flex items-center gap-1.5"
+          >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Continue Shopping</span>
           </Button>
@@ -238,20 +257,24 @@ export function CartView() {
 
       {/* Cart Content */}
       {items.length === 0 ? (
-        <Card className="text-center py-16 px-4 flex flex-col items-center justify-center gap-4">
-          <div className="w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-400">
+        <Card className="text-center py-16 px-4 flex flex-col items-center justify-center gap-4 border-slate-200/90">
+          <div className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400">
             <ShoppingCart className="w-6 h-6" />
           </div>
           <div className="flex flex-col gap-1">
-            <h2 className="text-base font-semibold text-black">
+            <h2 className="text-base font-semibold text-slate-900">
               Your shopping cart is empty
             </h2>
-            <p className="text-xs text-neutral-600 max-w-md">
-              You haven&apos;t added any products to your cart yet. Browse through our product catalog to get started.
+            <p className="text-xs text-slate-500 max-w-md">
+              You haven&apos;t added any products to your cart yet. Browse
+              through our product catalog to get started.
             </p>
           </div>
           <Link href="/products" className="mt-2">
-            <Button variant="primary" className="text-xs flex items-center gap-1.5">
+            <Button
+              variant="primary"
+              className="text-xs flex items-center gap-1.5"
+            >
               <span>Browse Products</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Button>
@@ -261,46 +284,49 @@ export function CartView() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Items Table (2 cols) */}
           <div className="lg:col-span-2 flex flex-col gap-4">
-            <Card className="overflow-hidden">
-              <CardHeader className="py-3 px-4 border-b border-neutral-200 bg-neutral-50 flex flex-row items-center justify-between">
-                <CardTitle className="text-xs font-semibold uppercase tracking-wider text-black">
+            <Card className="overflow-hidden border-slate-200/90 shadow-xs">
+              <CardHeader className="py-3 px-4 border-b border-slate-200 bg-slate-50/80 flex flex-row items-center justify-between">
+                <CardTitle className="text-xs font-semibold uppercase tracking-wider text-slate-800">
                   Cart Items ({items.length})
                 </CardTitle>
-                <span className="text-xs text-neutral-500 font-mono">
+                <span className="text-xs text-slate-500 font-mono">
                   {cart?.totalItems} total quantity
                 </span>
               </CardHeader>
               <CardContent className="p-0">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="border-b border-neutral-200 bg-white">
+                    <thead className="border-b border-slate-200 bg-white">
                       <tr>
-                        <th className="py-2.5 px-4 font-semibold text-black">
+                        <th className="py-2.5 px-4 font-semibold text-slate-800">
                           Product
                         </th>
-                        <th className="py-2.5 px-4 font-semibold text-black text-center">
+                        <th className="py-2.5 px-4 font-semibold text-slate-800 text-center">
                           Qty
                         </th>
-                        <th className="py-2.5 px-4 font-semibold text-black text-right">
+                        <th className="py-2.5 px-4 font-semibold text-slate-800 text-right">
                           Price
                         </th>
-                        <th className="py-2.5 px-4 font-semibold text-black text-right">
+                        <th className="py-2.5 px-4 font-semibold text-slate-800 text-right">
                           Line Total
                         </th>
-                        <th className="py-2.5 px-4 font-semibold text-black text-right">
+                        <th className="py-2.5 px-4 font-semibold text-slate-800 text-right">
                           Action
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-neutral-200">
+                    <tbody className="divide-y divide-slate-100">
                       {items.map((item) => {
                         const isBusy = isUpdatingId === item.id;
                         return (
-                          <tr key={item.id} className="hover:bg-neutral-50/50">
+                          <tr
+                            key={item.id}
+                            className="hover:bg-slate-50/60 transition-colors"
+                          >
                             {/* Product Info */}
                             <td className="py-3 px-4">
                               <div className="flex items-center gap-3">
-                                <div className="relative w-12 h-12 bg-neutral-100 rounded-sm border border-neutral-200 overflow-hidden shrink-0">
+                                <div className="relative w-12 h-12 bg-slate-50 rounded-sm border border-slate-200 overflow-hidden shrink-0">
                                   {item.imageUrl ? (
                                     <Image
                                       src={item.imageUrl}
@@ -310,17 +336,18 @@ export function CartView() {
                                       className="object-cover"
                                     />
                                   ) : (
-                                    <div className="w-full h-full flex items-center justify-center text-neutral-400">
+                                    <div className="w-full h-full flex items-center justify-center text-slate-300">
                                       <ShoppingCart className="w-4 h-4" />
                                     </div>
                                   )}
                                 </div>
                                 <div>
-                                  <h3 className="font-semibold text-black line-clamp-1">
+                                  <h3 className="font-semibold text-slate-900 line-clamp-1">
                                     {item.name}
                                   </h3>
-                                  <p className="text-[11px] text-neutral-500 font-mono">
-                                    Rs. {Number(item.price).toLocaleString()} each
+                                  <p className="text-[11px] text-slate-500 font-mono">
+                                    Rs. {Number(item.price).toLocaleString()}{" "}
+                                    each
                                   </p>
                                 </div>
                               </div>
@@ -338,12 +365,12 @@ export function CartView() {
                                     )
                                   }
                                   disabled={isBusy}
-                                  className="w-6 h-6 flex items-center justify-center rounded-sm border border-neutral-300 hover:border-black text-black disabled:opacity-40 transition-colors cursor-pointer"
+                                  className="w-6 h-6 flex items-center justify-center rounded-sm border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50 text-slate-700 disabled:opacity-40 transition-colors cursor-pointer"
                                   aria-label="Decrease quantity"
                                 >
                                   <Minus className="w-3 h-3" />
                                 </button>
-                                <span className="w-8 text-center font-mono font-semibold text-black">
+                                <span className="w-8 text-center font-mono font-semibold text-slate-900">
                                   {item.quantity}
                                 </span>
                                 <button
@@ -355,7 +382,7 @@ export function CartView() {
                                     )
                                   }
                                   disabled={isBusy}
-                                  className="w-6 h-6 flex items-center justify-center rounded-sm border border-neutral-300 hover:border-black text-black disabled:opacity-40 transition-colors cursor-pointer"
+                                  className="w-6 h-6 flex items-center justify-center rounded-sm border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50 text-slate-700 disabled:opacity-40 transition-colors cursor-pointer"
                                   aria-label="Increase quantity"
                                 >
                                   <Plus className="w-3 h-3" />
@@ -364,12 +391,12 @@ export function CartView() {
                             </td>
 
                             {/* Unit Price */}
-                            <td className="py-3 px-4 text-right font-mono text-neutral-800">
+                            <td className="py-3 px-4 text-right font-mono text-slate-700">
                               Rs. {Number(item.price).toLocaleString()}
                             </td>
 
                             {/* Line Total */}
-                            <td className="py-3 px-4 text-right font-mono font-bold text-black">
+                            <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
                               Rs. {Number(item.lineTotal).toLocaleString()}
                             </td>
 
@@ -379,7 +406,7 @@ export function CartView() {
                                 type="button"
                                 onClick={() => handleRemoveItem(item.id)}
                                 disabled={isBusy}
-                                className="text-neutral-500 hover:text-black p-1 rounded-sm transition-colors cursor-pointer disabled:opacity-40"
+                                className="text-slate-400 hover:text-rose-600 p-1 rounded-sm transition-colors cursor-pointer disabled:opacity-40"
                                 title="Remove item"
                                 aria-label="Remove item"
                               >
@@ -398,35 +425,35 @@ export function CartView() {
 
           {/* Billing & Checkout Card (1 col) */}
           <div className="flex flex-col gap-4">
-            <Card className="p-5 flex flex-col gap-4">
-              <div className="pb-3 border-b border-neutral-200">
-                <h2 className="text-sm font-bold text-black uppercase tracking-wider">
+            <Card className="p-5 flex flex-col gap-4 border-slate-200/90 shadow-xs">
+              <div className="pb-3 border-b border-slate-100">
+                <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
                   Billing Summary
                 </h2>
-                <p className="text-xs text-neutral-500 mt-0.5">
+                <p className="text-xs text-slate-500 mt-0.5">
                   Calculated price details for this order.
                 </p>
               </div>
 
               <div className="flex flex-col gap-2.5 text-xs">
-                <div className="flex items-center justify-between text-neutral-700">
+                <div className="flex items-center justify-between text-slate-600">
                   <span>Subtotal ({cart?.totalItems} items)</span>
-                  <span className="font-mono">
+                  <span className="font-mono text-slate-900 font-medium">
                     Rs. {Number(grandTotal).toLocaleString()}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-neutral-700">
+                <div className="flex items-center justify-between text-slate-600">
                   <span>Standard Shipping</span>
-                  <span className="font-semibold text-black">Free</span>
+                  <span className="font-semibold text-emerald-600">Free</span>
                 </div>
-                <div className="flex items-center justify-between text-neutral-700">
+                <div className="flex items-center justify-between text-slate-600">
                   <span>Taxes (Included)</span>
-                  <span className="font-mono">Rs. 0</span>
+                  <span className="font-mono text-slate-500">Rs. 0</span>
                 </div>
 
-                <div className="pt-3 border-t border-neutral-200 flex items-center justify-between text-sm font-bold text-black">
+                <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-sm font-bold text-slate-900">
                   <span>Grand Total</span>
-                  <span className="font-mono text-base">
+                  <span className="font-mono text-base text-indigo-600">
                     Rs. {Number(grandTotal).toLocaleString()}
                   </span>
                 </div>
@@ -453,7 +480,8 @@ export function CartView() {
                 </Button>
 
                 <p className="text-[11px] text-neutral-500 text-center leading-relaxed">
-                  Upon submitting, your order bill is instantly saved and emailed to your registered account address.
+                  Upon submitting, your order bill is instantly saved and
+                  emailed to your registered account address.
                 </p>
               </div>
             </Card>

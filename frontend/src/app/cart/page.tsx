@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function CartPage() {
   return (
-    <main className="min-h-[calc(100vh-3.5rem)] bg-white text-black py-4">
+    <main className="min-h-[calc(100vh-3.5rem)] py-4">
       <CartView />
     </main>
   );

@@ -37,12 +37,12 @@ export function LoginForm() {
   };
 
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full max-w-sm border-slate-200/90 shadow-sm">
       <CardHeader>
-        <div className="flex items-center gap-2 mb-1">
-          <LogIn className="w-4 h-4 text-black" />
-          <CardTitle>Sign In</CardTitle>
+        <div className="w-8 h-8 rounded-sm bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mb-2">
+          <LogIn className="w-4 h-4" />
         </div>
+        <CardTitle>Sign In</CardTitle>
         <CardDescription>
           Enter your email and password to access your cart and account.
         </CardDescription>
@@ -71,17 +71,17 @@ export function LoginForm() {
             required
           />
 
-          <Button type="submit" variant="primary" isLoading={isLoading} className="mt-2">
-            <span>Login</span>
+          <Button type="submit" variant="primary" isLoading={isLoading} className="mt-2 w-full flex items-center justify-center">
+            <span>Sign In</span>
             <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
           </Button>
 
-          <div className="text-center pt-2 border-t border-neutral-100">
-            <p className="text-xs text-neutral-600">
+          <div className="text-center pt-3 border-t border-slate-100">
+            <p className="text-xs text-slate-500">
               Don&apos;t have an account?{' '}
               <Link
                 href="/signup"
-                className="text-black font-semibold underline underline-offset-2 hover:opacity-80"
+                className="text-indigo-600 hover:text-indigo-700 font-semibold underline underline-offset-2"
               >
                 Sign up
               </Link>

@@ -38,12 +38,12 @@ export function SignupForm() {
   };
 
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full max-w-sm border-slate-200/90 shadow-sm">
       <CardHeader>
-        <div className="flex items-center gap-2 mb-1">
-          <UserPlus className="w-4 h-4 text-black" />
-          <CardTitle>Create Account</CardTitle>
+        <div className="w-8 h-8 rounded-sm bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mb-2">
+          <UserPlus className="w-4 h-4" />
         </div>
+        <CardTitle>Create Account</CardTitle>
         <CardDescription>
           Sign up to start shopping and receive order receipts by email.
         </CardDescription>
@@ -83,17 +83,17 @@ export function SignupForm() {
             required
           />
 
-          <Button type="submit" variant="primary" isLoading={isLoading} className="mt-2">
-            <span>Register</span>
+          <Button type="submit" variant="primary" isLoading={isLoading} className="mt-2 w-full flex items-center justify-center">
+            <span>Create Account</span>
             <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
           </Button>
 
-          <div className="text-center pt-2 border-t border-neutral-100">
-            <p className="text-xs text-neutral-600">
+          <div className="text-center pt-3 border-t border-slate-100">
+            <p className="text-xs text-slate-500">
               Already have an account?{' '}
               <Link
                 href="/login"
-                className="text-black font-semibold underline underline-offset-2 hover:opacity-80"
+                className="text-indigo-600 hover:text-indigo-700 font-semibold underline underline-offset-2"
               >
                 Sign in
               </Link>

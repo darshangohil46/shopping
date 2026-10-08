@@ -134,9 +134,9 @@ export function DashboardView() {
 
   if (isLoading) {
     return (
-      <Card className="w-full max-w-lg">
-        <div className="flex flex-col items-center justify-center py-12 gap-3 text-neutral-500">
-          <div className="w-6 h-6 border-2 border-black border-t-transparent animate-spin rounded-full" />
+      <Card className="w-full max-w-lg border-slate-200/90 shadow-xs">
+        <div className="flex flex-col items-center justify-center py-12 gap-3 text-slate-500">
+          <div className="w-6 h-6 border-2 border-indigo-600 border-t-transparent animate-spin rounded-full" />
           <p className="text-xs">Loading user details...</p>
         </div>
       </Card>
@@ -150,10 +150,10 @@ export function DashboardView() {
   return (
     <div className="w-full max-w-4xl flex flex-col gap-6">
       {/* Quick link banner to Products Page & Cart */}
-      <div className="p-4 bg-white border border-neutral-300 rounded-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+      <div className="p-4 bg-white border border-slate-200/90 rounded-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
         <div className="flex flex-col gap-0.5">
-          <span className="text-xs font-semibold text-black">Ready to Shop?</span>
-          <span className="text-[11px] text-neutral-600">
+          <span className="text-xs font-semibold text-slate-900">Ready to Shop?</span>
+          <span className="text-[11px] text-slate-500">
             Browse our catalog of products or view your active cart.
           </span>
         </div>
@@ -180,70 +180,72 @@ export function DashboardView() {
       </div>
 
       {/* User details card */}
-      <Card>
+      <Card className="border-slate-200/90 shadow-xs">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <UserIcon className="w-4 h-4 text-black" />
+              <div className="w-7 h-7 rounded-sm bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
+                <UserIcon className="w-4 h-4" />
+              </div>
               <CardTitle>Account Details</CardTitle>
             </div>
-            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 bg-neutral-100 text-neutral-800 border border-neutral-300 rounded-sm">
+            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-sm">
               Account
             </span>
           </div>
           <CardDescription>
-            Welcome, <strong className="text-black">{user.name}</strong>. Here are your account credentials.
+            Welcome back, <strong className="text-slate-900">{user.name}</strong>. Here are your account credentials.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
             {/* Full Name */}
-            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-sm flex flex-col gap-1">
-              <span className="flex items-center gap-1.5 text-neutral-500 text-[11px] font-medium">
-                <UserIcon className="w-3 h-3 text-neutral-400" />
+            <div className="p-3 bg-slate-50/80 border border-slate-200/80 rounded-sm flex flex-col gap-1">
+              <span className="flex items-center gap-1.5 text-slate-500 text-[11px] font-medium">
+                <UserIcon className="w-3 h-3 text-slate-400" />
                 Full Name
               </span>
-              <span className="font-semibold text-black">{user.name}</span>
+              <span className="font-semibold text-slate-900">{user.name}</span>
             </div>
 
             {/* Email */}
-            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-sm flex flex-col gap-1">
-              <span className="flex items-center gap-1.5 text-neutral-500 text-[11px] font-medium">
-                <Mail className="w-3 h-3 text-neutral-400" />
+            <div className="p-3 bg-slate-50/80 border border-slate-200/80 rounded-sm flex flex-col gap-1">
+              <span className="flex items-center gap-1.5 text-slate-500 text-[11px] font-medium">
+                <Mail className="w-3 h-3 text-slate-400" />
                 Registered Email
               </span>
-              <span className="font-mono text-black">{user.email}</span>
+              <span className="font-mono text-slate-900">{user.email}</span>
             </div>
 
             {/* Created At */}
-            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-sm flex flex-col gap-1">
-              <span className="flex items-center gap-1.5 text-neutral-500 text-[11px] font-medium">
-                <Calendar className="w-3 h-3 text-neutral-400" />
+            <div className="p-3 bg-slate-50/80 border border-slate-200/80 rounded-sm flex flex-col gap-1">
+              <span className="flex items-center gap-1.5 text-slate-500 text-[11px] font-medium">
+                <Calendar className="w-3 h-3 text-slate-400" />
                 Joined On
               </span>
-              <span className="text-neutral-800 font-mono">
+              <span className="text-slate-700 font-mono">
                 {formatDateTime(user.createdAt)}
               </span>
             </div>
 
             {/* Updated At */}
-            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-sm flex flex-col gap-1">
-              <span className="flex items-center gap-1.5 text-neutral-500 text-[11px] font-medium">
-                <Clock className="w-3 h-3 text-neutral-400" />
+            <div className="p-3 bg-slate-50/80 border border-slate-200/80 rounded-sm flex flex-col gap-1">
+              <span className="flex items-center gap-1.5 text-slate-500 text-[11px] font-medium">
+                <Clock className="w-3 h-3 text-slate-400" />
                 Last Updated
               </span>
-              <span className="text-neutral-800 font-mono">
+              <span className="text-slate-700 font-mono">
                 {formatDateTime(user.updatedAt)}
               </span>
             </div>
           </div>
 
-          <div className="pt-4 mt-4 border-t border-neutral-200 flex items-center justify-end">
+          <div className="pt-4 mt-4 border-t border-slate-200 flex items-center justify-end">
             <Button
               variant="secondary"
               onClick={handleLogout}
               isLoading={isLoggingOut}
-              className="flex items-center gap-1.5 text-xs"
+              className="flex items-center gap-1.5 text-xs text-slate-700 hover:text-rose-600 hover:bg-rose-50"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Sign Out</span>
@@ -254,33 +256,35 @@ export function DashboardView() {
 
       {/* Orders Section */}
       <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between pb-2 border-b border-neutral-200">
+        <div className="flex items-center justify-between pb-2 border-b border-slate-200">
           <div className="flex items-center gap-2">
-            <Package className="w-4 h-4 text-black" />
-            <h2 className="text-base font-bold tracking-tight text-black">
+            <div className="w-7 h-7 rounded-sm bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
+              <Package className="w-4 h-4" />
+            </div>
+            <h2 className="text-base font-bold tracking-tight text-slate-900">
               Order Details & Invoices
             </h2>
           </div>
-          <span className="text-xs text-neutral-600 font-mono font-medium">
+          <span className="text-xs text-slate-500 font-mono font-medium">
             {orders.length} {orders.length === 1 ? 'order' : 'orders'} placed
           </span>
         </div>
 
         {isLoadingOrders ? (
-          <div className="flex flex-col items-center justify-center py-12 gap-3 text-neutral-500">
-            <div className="w-6 h-6 border-2 border-black border-t-transparent animate-spin rounded-full" />
+          <div className="flex flex-col items-center justify-center py-12 gap-3 text-slate-500">
+            <div className="w-6 h-6 border-2 border-indigo-600 border-t-transparent animate-spin rounded-full" />
             <p className="text-xs">Loading order history...</p>
           </div>
         ) : orders.length === 0 ? (
-          <Card className="text-center py-12 px-4 flex flex-col items-center justify-center gap-3">
-            <div className="w-10 h-10 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-400">
+          <Card className="text-center py-12 px-4 flex flex-col items-center justify-center gap-3 border-slate-200/90 shadow-xs">
+            <div className="w-10 h-10 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400">
               <Package className="w-5 h-5" />
             </div>
             <div className="flex flex-col gap-1">
-              <h3 className="text-sm font-semibold text-black">
+              <h3 className="text-sm font-semibold text-slate-900">
                 No orders placed yet
               </h3>
-              <p className="text-xs text-neutral-600 max-w-sm">
+              <p className="text-xs text-slate-500 max-w-sm">
                 When you check out items from your cart, your complete order summary, quantities, unit prices, and bill will be stored and shown here.
               </p>
             </div>
@@ -299,42 +303,42 @@ export function DashboardView() {
                 0,
               );
               return (
-                <Card key={order.id} className="overflow-hidden border-neutral-300">
+                <Card key={order.id} className="overflow-hidden border-slate-200/90 shadow-xs">
                   {/* Order Card Header */}
-                  <div className="p-4 bg-neutral-50 border-b border-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="p-4 bg-slate-50/80 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex flex-col gap-0.5">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-semibold text-black">
+                        <span className="text-xs font-semibold text-slate-900">
                           Order ID:
                         </span>
-                        <span className="text-xs font-mono text-neutral-700 select-all">
+                        <span className="text-xs font-mono text-slate-700 select-all">
                           {order.id}
                         </span>
                       </div>
-                      <span className="text-[11px] text-neutral-500">
+                      <span className="text-[11px] text-slate-500">
                         Placed on {formatDateTime(order.createdAt)}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-medium rounded-sm border border-neutral-300 bg-white text-black">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium rounded-sm border border-emerald-200 bg-emerald-50 text-emerald-700">
                         {order.emailSent ? (
                           <>
-                            <CheckCircle2 className="w-3 h-3 text-black" />
+                            <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                             <span>Bill Emailed</span>
                           </>
                         ) : (
                           <>
-                            <Mail className="w-3 h-3 text-neutral-500" />
+                            <Mail className="w-3 h-3 text-slate-500" />
                             <span>Recorded</span>
                           </>
                         )}
                       </span>
                       <div className="text-right">
-                        <span className="text-[11px] text-neutral-500 block">
+                        <span className="text-[11px] text-slate-500 block">
                           Total Amount
                         </span>
-                        <span className="text-sm font-bold font-mono text-black">
+                        <span className="text-sm font-bold font-mono text-indigo-600">
                           Rs. {Number(order.grandTotal).toLocaleString()}
                         </span>
                       </div>
@@ -344,30 +348,30 @@ export function DashboardView() {
                   {/* Order Items Table */}
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs">
-                      <thead className="border-b border-neutral-200 bg-white text-neutral-700">
+                      <thead className="border-b border-slate-200 bg-white text-slate-700">
                         <tr>
-                          <th className="py-2.5 px-4 font-semibold text-black">
+                          <th className="py-2.5 px-4 font-semibold text-slate-800">
                             Product Details
                           </th>
-                          <th className="py-2.5 px-4 font-semibold text-black text-center">
+                          <th className="py-2.5 px-4 font-semibold text-slate-800 text-center">
                             Quantity
                           </th>
-                          <th className="py-2.5 px-4 font-semibold text-black text-right">
+                          <th className="py-2.5 px-4 font-semibold text-slate-800 text-right">
                             Unit Price
                           </th>
-                          <th className="py-2.5 px-4 font-semibold text-black text-right">
+                          <th className="py-2.5 px-4 font-semibold text-slate-800 text-right">
                             Total Price
                           </th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-neutral-200">
+                      <tbody className="divide-y divide-slate-100">
                         {order.items.map((item) => (
-                          <tr key={item.id} className="hover:bg-neutral-50/50">
+                          <tr key={item.id} className="hover:bg-slate-50/60 transition-colors">
                             {/* Product */}
                             <td className="py-3 px-4">
                               <div className="flex items-center gap-3">
                                 {item.imageUrl ? (
-                                  <div className="relative w-9 h-9 bg-neutral-100 rounded-sm border border-neutral-200 overflow-hidden shrink-0">
+                                  <div className="relative w-9 h-9 bg-slate-50 rounded-sm border border-slate-200 overflow-hidden shrink-0">
                                     <Image
                                       src={item.imageUrl}
                                       alt={item.name}
@@ -377,45 +381,45 @@ export function DashboardView() {
                                     />
                                   </div>
                                 ) : (
-                                  <div className="w-9 h-9 bg-neutral-100 rounded-sm border border-neutral-200 flex items-center justify-center text-neutral-400 shrink-0">
+                                  <div className="w-9 h-9 bg-slate-50 rounded-sm border border-slate-200 flex items-center justify-center text-slate-400 shrink-0">
                                     <ShoppingBag className="w-4 h-4" />
                                   </div>
                                 )}
-                                <span className="font-medium text-black">
+                                <span className="font-medium text-slate-900">
                                   {item.name}
                                 </span>
                               </div>
                             </td>
 
                             {/* Quantity */}
-                            <td className="py-3 px-4 text-center font-mono text-neutral-800 font-semibold">
+                            <td className="py-3 px-4 text-center font-mono text-slate-800 font-semibold">
                               {item.quantity}
                             </td>
 
                             {/* Unit Price */}
-                            <td className="py-3 px-4 text-right font-mono text-neutral-700">
+                            <td className="py-3 px-4 text-right font-mono text-slate-600">
                               Rs. {Number(item.price).toLocaleString()}
                             </td>
 
                             {/* Line Total */}
-                            <td className="py-3 px-4 text-right font-mono font-bold text-black">
+                            <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
                               Rs. {Number(item.lineTotal).toLocaleString()}
                             </td>
                           </tr>
                         ))}
 
                         {/* Order Summary Footer Row */}
-                        <tr className="bg-neutral-50 font-bold border-t border-neutral-200">
-                          <td className="py-3 px-4 text-black font-semibold">
+                        <tr className="bg-slate-50/80 font-bold border-t border-slate-200">
+                          <td className="py-3 px-4 text-slate-900 font-semibold">
                             Order Grand Total ({totalItemsCount} items)
                           </td>
-                          <td className="py-3 px-4 text-center font-mono text-neutral-700 font-medium">
+                          <td className="py-3 px-4 text-center font-mono text-slate-700 font-medium">
                             {totalItemsCount}
                           </td>
-                          <td className="py-3 px-4 text-right text-neutral-500 font-normal">
+                          <td className="py-3 px-4 text-right text-slate-400 font-normal">
                             -
                           </td>
-                          <td className="py-3 px-4 text-right text-black font-mono text-sm">
+                          <td className="py-3 px-4 text-right text-indigo-600 font-mono text-sm">
                             Rs. {Number(order.grandTotal).toLocaleString()}
                           </td>
                         </tr>

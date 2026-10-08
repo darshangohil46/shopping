@@ -62,7 +62,7 @@ All tables include automatic `created_at` and `updated_at` timestamp tracking:
 ### Frontend (`/frontend`)
 
 - **Framework**: Next.js 15+ (App Router, Server Components + Client Components)
-- **Styling**: Tailwind CSS with a pure Black & White design system (`#ffffff` background, `#000000` typography, `border-neutral-200`, `rounded-sm`)
+- **Styling**: Tailwind CSS with a modern Warm Orange & Stone design system (`#fafaf9` background, `#1c1917` typography, `orange-600` primary accent, `border-stone-200`, `rounded-sm`)
 - **Icons**: Lucide React
 - **Validation**: Zod schema validation
 - **Architecture Flow**:
@@ -127,15 +127,17 @@ You can register a new user or log in with the test user:
 ### Finished:
 
 - Complete end-to-end user registration, login, and profile view.
-- 10 sample products seeded in database.
-- Persistent database-backed shopping cart per user.
+- 10 sample hardware and office accessory products seeded in database.
+- Persistent database-backed shopping cart per user with real-time green badge indicator.
 - Add, update quantity, remove items, line total, and grand total calculations.
-- Order submission with items recording in `orders` and `order_items`.
-- Email delivery with order summary table and preview link.
-- Pure Black & White SaaS aesthetic adhering strictly to UX guidelines.
+- Order submission with item records stored in `orders` and `order_items` tables.
+- Automatic email delivery of styled order bill with itemized breakdown.
+- Itemized Order History & Invoices view on the dashboard with line totals and email delivery tags.
+- Warm Orange & Stone modern SaaS aesthetic with full mobile, tablet, and desktop responsiveness.
+- Modular code architecture with shared `OrderItemsTable` component and custom Next.js loading, not-found, and error boundary pages.
 
 ### Future Improvements:
 
-- Stripe / Payment gateway webhook integration.
-- Search, filter, and pagination on product catalog.
-- User order history view (`/orders`).
+- Payment gateway (Stripe / Razorpay) webhook integration.
+- Search, filter by category, and sorting on the product catalog.
+- PDF invoice download option for placed orders.

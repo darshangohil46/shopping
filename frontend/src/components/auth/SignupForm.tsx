@@ -38,9 +38,9 @@ export function SignupForm() {
   };
 
   return (
-    <Card className="w-full max-w-sm border-slate-200/90 shadow-sm">
+    <Card className="w-full max-w-sm border-stone-200/90 shadow-sm">
       <CardHeader>
-        <div className="w-8 h-8 rounded-sm bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mb-2">
+        <div className="w-8 h-8 rounded-sm bg-orange-50 border border-orange-200 flex items-center justify-center text-orange-600 mb-2">
           <UserPlus className="w-4 h-4" />
         </div>
         <CardTitle>Create Account</CardTitle>
@@ -88,12 +88,12 @@ export function SignupForm() {
             <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
           </Button>
 
-          <div className="text-center pt-3 border-t border-slate-100">
-            <p className="text-xs text-slate-500">
+          <div className="text-center pt-3 border-t border-stone-100">
+            <p className="text-xs text-stone-500">
               Already have an account?{' '}
               <Link
                 href="/login"
-                className="text-indigo-600 hover:text-indigo-700 font-semibold underline underline-offset-2"
+                className="text-orange-600 hover:text-orange-700 font-semibold underline underline-offset-2"
               >
                 Sign in
               </Link>

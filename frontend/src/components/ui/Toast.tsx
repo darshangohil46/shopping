@@ -61,9 +61,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             key={t.id}
             className={cn(
               "pointer-events-auto flex items-center justify-between gap-3 p-3 bg-white rounded-sm shadow-md border transition-all",
-              t.type === 'success' && "border-emerald-200 text-slate-900",
-              t.type === 'error' && "border-rose-200 text-slate-900",
-              t.type === 'info' && "border-indigo-200 text-slate-900",
+              t.type === 'success' && "border-emerald-200 text-stone-900",
+              t.type === 'error' && "border-rose-200 text-stone-900",
+              t.type === 'info' && "border-orange-200 text-stone-900",
             )}
           >
             <div className="flex items-center gap-2.5 text-xs font-medium">
@@ -74,14 +74,14 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
               )}
               {t.type === 'info' && (
-                <Info className="w-4 h-4 text-indigo-600 shrink-0" />
+                <Info className="w-4 h-4 text-orange-600 shrink-0" />
               )}
               <span>{t.message}</span>
             </div>
             <button
               type="button"
               onClick={() => removeToast(t.id)}
-              className="text-slate-400 hover:text-slate-700 cursor-pointer p-0.5 rounded-sm transition-colors"
+              className="text-stone-400 hover:text-stone-700 cursor-pointer p-0.5 rounded-sm transition-colors"
               aria-label="Close toast"
             >
               <X className="w-3.5 h-3.5" />

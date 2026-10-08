@@ -5,7 +5,7 @@ export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
-        "bg-white border border-slate-200/90 rounded-sm p-6 shadow-xs",
+        "bg-white border border-stone-200/90 rounded-sm p-6 shadow-xs",
         className,
       )}
       {...props}
@@ -20,7 +20,7 @@ export function CardHeader({
   return (
     <div
       className={cn(
-        "flex flex-col gap-1 mb-6 pb-4 border-b border-slate-100",
+        "flex flex-col gap-1 mb-6 pb-4 border-b border-stone-100",
         className,
       )}
       {...props}
@@ -35,7 +35,7 @@ export function CardTitle({
   return (
     <h2
       className={cn(
-        "text-lg font-semibold tracking-tight text-slate-900",
+        "text-lg font-semibold tracking-tight text-stone-900",
         className,
       )}
       {...props}
@@ -47,7 +47,7 @@ export function CardDescription({
   className,
   ...props
 }: HTMLAttributes<HTMLParagraphElement>) {
-  return <p className={cn("text-xs text-slate-500", className)} {...props} />;
+  return <p className={cn("text-xs text-stone-500", className)} {...props} />;
 }
 
 export function CardContent({

@@ -22,10 +22,14 @@ export class OrderItem {
   @JoinColumn({ name: 'orderId' })
   order: Order;
 
-  @Column({ type: 'uuid' })
+  @Column({ type: 'uuid', nullable: true })
   productId: string;
 
-  @ManyToOne(() => Product, { eager: true, onDelete: 'CASCADE' })
+  @ManyToOne(() => Product, {
+    eager: true,
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
   @JoinColumn({ name: 'productId' })
   product: Product;
 

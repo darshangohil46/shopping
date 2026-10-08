@@ -23,9 +23,9 @@ export class Product {
   @Column({ type: 'varchar', length: 500, nullable: true })
   imageUrl: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

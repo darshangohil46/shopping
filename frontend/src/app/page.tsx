@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="flex-1 flex items-center justify-center p-4">
+    <main className="min-h-[calc(100vh-3.5rem)] w-full py-6 px-4 flex justify-center">
       <DashboardView />
-    </div>
+    </main>
   );
 }

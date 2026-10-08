@@ -3,22 +3,25 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ShoppingBag, ArrowLeft, Plus } from 'lucide-react';
+import { ShoppingBag, ShoppingCart, ArrowLeft, Plus } from 'lucide-react';
 import { productsService } from '../../services/products.service';
+import { cartService } from '../../services/cart.service';
 import { Product } from '../../types/product.types';
 import { useToast } from '../../hooks/useToast';
 import { Button } from '../ui/Button';
-import { Card, CardContent } from '../ui/Card';
+import { Card } from '../ui/Card';
 
 export function ProductList() {
   const { toast } = useToast();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [addingId, setAddingId] = useState<string | null>(null);
+  const [hasCartItems, setHasCartItems] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
 
-    async function fetchProducts() {
+    async function fetchData() {
       try {
         const response = await productsService.getProducts();
         if (isMounted) {
@@ -33,17 +36,49 @@ export function ProductList() {
           setIsLoading(false);
         }
       }
+
+      try {
+        const cart = await cartService.getCart();
+        if (isMounted) {
+          setHasCartItems(Boolean(cart && cart.items && cart.items.length > 0));
+        }
+      } catch {
+        if (isMounted) setHasCartItems(false);
+      }
     }
 
-    fetchProducts();
+    fetchData();
+
+    const handleCartUpdate = async () => {
+      try {
+        const cart = await cartService.getCart();
+        if (isMounted) {
+          setHasCartItems(Boolean(cart && cart.items && cart.items.length > 0));
+        }
+      } catch {
+        if (isMounted) setHasCartItems(false);
+      }
+    };
+
+    window.addEventListener('cart-updated', handleCartUpdate);
 
     return () => {
       isMounted = false;
+      window.removeEventListener('cart-updated', handleCartUpdate);
     };
   }, [toast]);
 
-  const handleAddToCart = (product: Product) => {
-    toast(`Added "${product.name}" to cart!`, 'success');
+  const handleAddToCart = async (product: Product) => {
+    setAddingId(product.id);
+    try {
+      await cartService.addToCart(product.id, 1);
+      toast(`Added "${product.name}" to cart!`, 'success');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Failed to add item to cart';
+      toast(msg, 'error');
+    } finally {
+      setAddingId(null);
+    }
   };
 
   if (isLoading) {
@@ -71,12 +106,25 @@ export function ProductList() {
           </p>
         </div>
 
-        <Link href="/">
-          <Button variant="outline" className="flex items-center gap-1.5 text-xs">
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to Home</span>
-          </Button>
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link href="/">
+            <Button variant="outline" className="flex items-center gap-1.5 text-xs">
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Back to Home</span>
+            </Button>
+          </Link>
+          <Link href="/cart">
+            <Button variant="primary" className="flex items-center gap-1.5 text-xs">
+              <div className="relative flex items-center justify-center">
+                <ShoppingCart className="w-3.5 h-3.5" />
+                {hasCartItems && (
+                  <span className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 rounded-full ring-2 ring-black" />
+                )}
+              </div>
+              <span>View Cart</span>
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Product Grid */}
@@ -132,10 +180,15 @@ export function ProductList() {
                 <Button
                   variant="primary"
                   onClick={() => handleAddToCart(product)}
+                  disabled={addingId === product.id}
                   className="text-xs px-3 py-1.5 flex items-center gap-1"
                 >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Add</span>
+                  {addingId === product.id ? (
+                    <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent animate-spin rounded-full" />
+                  ) : (
+                    <Plus className="w-3.5 h-3.5" />
+                  )}
+                  <span>{addingId === product.id ? 'Adding...' : 'Add'}</span>
                 </Button>
               </div>
             </Card>

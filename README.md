@@ -117,7 +117,7 @@ All tables include automatic `created_at` and `updated_at` timestamp tracking:
 
 You can register a new user or log in with the test user:
 
-- **Email**: `admin@example.com`
+- **Email**: `admin@mail.com`
 - **Password**: `Admin@123`
 
 ---
